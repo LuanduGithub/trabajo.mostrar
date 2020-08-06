@@ -1,0 +1,103 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+.animacion-entrada {
+  -webkit-animation: card-animation 0.5s;
+  animation: card-animation 0.5s;
+  animation-fill-mode: both;
+}
+
+@keyframes card-animation {
+  from {
+    opacity: 0.5;
+    transform: translateY(100px);
+    transition-timing-function: ease-in;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes card-animation {
+  from {
+    opacity: 0.5;
+    transform: translateY(100px);
+    transition-timing-function: ease-in;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+input,
+button {
+  outline: none;
+}
+.alert-wrapper {
+  border-radius: 6px !important;
+  background: var(--ion-color-primary-tint) !important;
+  .alert-head {
+    padding: 5px 0 0 !important;
+  }
+  .alert-title {
+    color: var(--ion-color-primary-contrast) !important;
+    font-size: 0.9rem !important;
+    text-align: center;
+    padding: 5px 0;
+  }
+  .alert-radio-group {
+    border-top:.55px solid rgba(var(--ion-text-color-rgb,0,0,0),.2);
+    border-bottom:.55px solid rgba(var(--ion-text-color-rgb,0,0,0),.2);
+  }
+  .alert-radio-label {
+    color: var(--ion-color-secondary) !important;
+    font-size: 0.75rem !important;
+  }
+  .alert-button {
+    color: var(--ion-color-primary-contrast) !important;
+    font-size: 0.9rem !important;
+  }
+}
+.loading-wrapper {
+  background: var(--ion-color-secondary) !important;
+}
+route-outlet {
+  background: var(--ion-color-primary);
+}
+.toast-header {
+  font-weight: bold !important;
+}
+.item-has-focus .label-floating.sc-ion-label-md-h {
+  color: var(--ion-color-primary-contrast) !important;
+}
+.item-native {
+  padding: 0 !important;
+}
+body,
+html {
+  background: var(--ion-color-primary);
+}

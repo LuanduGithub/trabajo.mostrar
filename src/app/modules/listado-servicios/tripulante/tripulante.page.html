@@ -1,0 +1,170 @@
+<app-header *ngIf="lan" title='{{lan.tripulantedetalles.tripulante}}'></app-header>
+
+<ion-content>
+  <p style="width: 45%; margin: 0 auto 50px;" *ngIf="!lan">
+    <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
+  </p>
+  <div class="services-list animacion-entrada" *ngIf="tripulante">
+    <div class="profile-img" [ngStyle]="{'height': zoomIn ? zoomIn : '200px' }">
+      <ion-icon name="scan" class="zoomBtn" (click)="zoomInProfileImg()" *ngIf="!zoomIn"></ion-icon>
+      <ion-icon name="close" class="zoomBtn" (click)="zoomOutProfileImg()" *ngIf="zoomIn"></ion-icon>
+      <img [src]="tripulante.foto" #profileImg />
+    </div>
+    <div class="services-list__header" style="border-radius: none;">
+      <div class="services-list__header__title">
+        {{tripulante.nombre}}
+      </div>
+
+      <div class="services-list__header__amount">
+        <div>
+          <ion-icon ios="person-outline" md="person-sharp" style="font-size: .6rem;"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-list" *ngIf="tripulante">
+
+      <div class="detail-list__item ">
+        <ion-icon name="document-text"></ion-icon>
+        <label><span>{{lan.tripulantedetalles.documento}}</span>{{tripulante.documento ||  lan.general.sininformacion}}</label>
+      </div>
+
+      <div class="detail-list__item ">
+        <ion-icon name="mail-open"></ion-icon>
+        <label *ngIf="!tripulante.email"><span>{{lan.tripulantedetalles.email}}</span>
+          {{lan.general.sininformacion}}</label>
+        <label *ngIf="tripulante.email"><span>{{lan.tripulantedetalles.email}}</span><a
+            style="color:var(--ion-color-secondary-shade)"
+            href="mailto:{{tripulante.email}}?subject=SEALAND%20">{{tripulante.email}}</a></label>
+        <ion-icon name="copy" class="ion-icon-button" (click)="copyToClipboard(tripulante.email)"></ion-icon>
+      </div>
+
+      <div class="detail-list__item ">
+        <ion-icon name="call"></ion-icon>
+        <label *ngIf="!tripulante.telefono"><span>{{lan.tripulantedetalles.telefono}}</span>
+          {{lan.general.sininformacion}}</label>
+        <label *ngIf="tripulante.telefono"><span>{{lan.tripulantedetalles.telefono}}</span><a
+            style="color:var(--ion-color-secondary-shade)"
+            href="tel:{{tripulante.telefono}}">{{tripulante.telefono}}</a></label>
+        <a href="whatsapp:/send?phone={{tripulante.telefono}}">
+          <ion-icon name="logo-whatsapp" class="ion-icon-button"></ion-icon>
+        </a>
+
+      </div>
+
+      <div class="detail-list__item ">
+        <ion-icon name="chatbubbles"></ion-icon>
+        <label>
+          <span>{{lan.tripulantedetalles.idiomas}}</span>
+          <div style="display: inline-block" *ngIf="tripulante.idiomas.length">
+            <div style="display: inline-block;margin-right: 5px;" *ngFor="let idioma of tripulante.idiomas">
+              {{ idioma.texto }}
+            </div>
+          </div>
+          <div style="display: inline-block;margin-right: 5px;" *ngIf="!tripulante.idiomas.length">
+            {{lan.general.sininformacion}}
+          </div>
+        </label>
+      </div>
+      <div class="detail-list__item ">
+        <ion-icon name="chatbox"></ion-icon>
+        <label><span>{{lan.tripulantedetalles.observacion}}</span>{{lan.general.sincomentarios || tripulante.observacion}}</label>
+      </div>
+
+      <div class="detail-list__item" *ngIf="detallesColor?.detalles.length > 0">
+        <ion-icon name="information-circle"
+          [ngStyle]="{'color': detallesColor.color === 0 ? '#42d77d ' : (detallesColor.color === 1? '#ffca22' :'#ed576b')}">
+        </ion-icon>
+        <label><span>(Detalles {{detallesColor.detalles.length}})</span></label>
+        <ion-icon class="dropdown" name="caret-down-outline" (click)="sublist = !sublist"
+          [ngClass]="{'rotate-element-180':  sublist,'rotate-element-0': !sublist}"
+          [ngStyle]="{'color': detallesColor.color === 0 ? '#42d77d ' : (detallesColor.color === 1? '#ffca22' :'#ed576b')}">
+        </ion-icon>
+        <div class="detail-list__item__sublist" *ngIf="sublist">
+          <div class="detail-list__item__sublist__item" *ngFor="let detalle of detallesColor.detalles">
+            <div><span>{{lan.tripulantedetalles.detalles}}</span> {{detalle.texto}}</div>
+            <div>
+              <span>{{lan.tripulantedetalles.observacion}}</span>{{lan.general.sincomentarios || detalle.observacion}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="services-list animacion-entrada" *ngIf="tripulante">
+    <div class="services-list__header">
+      <div class="services-list__header__title" *ngIf="datosCity">
+        {{datosCity}}
+      </div>
+      <div class="services-list__header__amount">
+        <div>
+          <ion-icon name="pin" style="font-size: .6rem;"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-list" *ngIf="!ubicacion">
+      <div class="detail-list__item">
+        <ion-icon name="alert"></ion-icon>
+        <label>{{lan.tripulantedetalles.mapanodisponible}}</label>
+      </div>
+      <ion-button color="tertiary" class="" mode="ios" (click)="scrollTo(signaturePadElement); sign = !sign"
+        *ngIf="signed">
+        {{lan.tripulantedetalles.firma}}</ion-button>
+      <ion-button color="primary" class="" mode="ios" (click)="backbtn()" *ngIf="!sign">
+        <ion-icon name="chevron-back"></ion-icon>
+        {{lan.general.volver}}
+      </ion-button>
+    </div>
+
+    <div class="detail-list" *ngIf="ubicacion">
+      <div class="detail-list__item">
+        <ion-icon name="chatbox"></ion-icon>
+        <label><span>{{lan.general.ultimaactualizacion}}</span>{{ubicacion.fecha}}</label>
+      </div>
+      <div class="detail-list__item" style="height: 200px;" *ngIf="ubicacion.latitud && ubicacion.longitud">
+        <app-map latitude='{{ubicacion.latitud}}' longitude='{{ubicacion.longitud}}'></app-map>
+      </div>
+      <ion-button color="tertiary" class="" mode="ios" (click)="scrollTo(signaturePadElement); sign = !sign"
+        *ngIf="signed">Firma</ion-button>
+      <ion-button color="primary" class="" mode="ios" (click)="backbtn()" *ngIf="!sign">
+        <ion-icon name="chevron-back"></ion-icon>
+        {{lan.general.volver}}
+      </ion-button>
+    </div>
+
+    <div class="services-list animacion-entrada" #signaturePadElement>
+      <div *ngIf="sign">
+        <div class="services-list__header">
+          <div class="services-list__header__title">
+            {{lan.tripulantedetalles.firmadigital}}
+          </div>
+          <div class="services-list__header__amount">
+            <div>
+              <ion-icon name="pencil-outline" style="font-size:.6rem;"></ion-icon>
+            </div>
+          </div>
+        </div>
+        <div class="detail-list">
+          <div class="signature-pad-container">
+            <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawBegin()">
+            </signature-pad>
+          </div>
+          <ion-button color="primary" class="" style="width: 45%;" mode="ios" (click)="drawClear()">
+            {{lan.tripulantedetalles.borrar}}
+          </ion-button>
+          <ion-button color="secondary" class="" style="width: 50%;float:right" mode="ios"
+            (click)="drawComplete(); sign = !sign" [disabled]="signatureBtnIsDisabled">
+            {{lan.tripulantedetalles.aceptar}}
+          </ion-button>
+          <ion-button color="primary" class="" mode="ios" (click)="backbtn()">
+            <ion-icon name="chevron-back"></ion-icon>
+            {{lan.general.volver}}
+          </ion-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<app-footer *ngIf="lan"></app-footer>

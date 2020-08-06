@@ -1,0 +1,83 @@
+<app-header *ngIf="lan" title='{{lan.serviciotraslado.serviciotraslado}}'></app-header>
+
+<ion-content>
+
+  <div class="services-list animacion-entrada" *ngIf="transfer">
+    <div class="services-list__header">
+      <div class="services-list__header__title">
+        {{transfer.fecha | date: 'mediumDate'}} | {{transfer.hora | date: 'mediumTime'}}
+      </div>
+
+      <div class="services-list__header__amount">
+        <div>
+          <ion-icon ios="person-outline" md="person-sharp" style="font-size: .6rem;"></ion-icon>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-list">
+      <div class="detail-list__item">
+        <ion-icon name="navigate-circle"></ion-icon>
+        <label><span>{{lan.serviciotraslado.origen}}</span>{{transfer.origen}}</label>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="pin"></ion-icon>
+        <label><span>{{lan.serviciotraslado.destino}}</span>{{transfer.destino}}</label>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="people"></ion-icon>
+        <label><span>{{lan.serviciotraslado.tripulante}}</span>{{transfer.cantidadTripulantes}}</label>
+        <ion-icon class="dropdown" name="caret-down-outline" (click)="sublist = !sublist"
+          [ngClass]="{'rotate-element-180':  sublist,'rotate-element-0': !sublist}">
+        </ion-icon>
+        <div class="detail-list__item__sublist" *ngIf="sublist">
+          <div class="detail-list__item__sublist__item" *ngFor="let tripulantes of transfer.tripulantes">
+            <div><span>{{lan.serviciotraslado.nombre}}</span> {{tripulantes.nombre}}</div>
+            <div><span>{{lan.serviciotraslado.dni}}</span> {{tripulantes.documento}}</div>
+            <ion-button color="primary" class="services-list__grid__buttonDetail" mode="ios"
+              (click)="gotoTripulante(tripulantes)">
+              <ion-icon name="information"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="time"></ion-icon>
+        <label><span>{{lan.serviciotraslado.tiempoestimado}}</span>{{transfer.tiempoEstimado}}</label>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="car-sport"></ion-icon>
+        <label><span>{{lan.serviciotraslado.tipo}}</span>{{transfer.tipoTraslado}}</label>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="airplane"></ion-icon>
+        <label><span>({{lan.serviciotraslado.numeroVuelo}})</span>{{lan.general.sinAsignar ||transfer.numeroVuelo}}</label>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="analytics"></ion-icon>
+        <label><span>({{lan.serviciotraslado.recorrido}})</span>{{transfer.recorrido}}</label>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="briefcase"></ion-icon>
+        <label><span>{{lan.serviciotraslado.equipaje}}</span>{{transfer.equipaje}}</label>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="chatbox"></ion-icon>
+        <label>{{lan.general.sincomentarios || transfer.observacion}}</label>
+      </div>
+      <ion-button color="tertiary" class="" mode="ios" (click)="gotoBitacora(transfer)">
+        <ion-icon name="mail-unread" style="font-size: .85rem; margin-right: 5px;color:var(--ion-color-danger-shade)" *ngIf="transfer.bitacoraNuevo"></ion-icon>
+        <ion-icon name="mail" style="font-size: .85rem; margin-right: 5px;" *ngIf="!transfer.bitacoraNuevo"></ion-icon>
+        {{lan.serviciotraslado.bitacora}}
+      </ion-button>
+      <ion-button color="primary" class="" mode="ios" (click)="backbtn()">
+        <ion-icon name="chevron-back"></ion-icon>
+        {{lan.general.volver}}
+      </ion-button>
+    </div>
+  </div>
+
+</ion-content>
+
+<app-footer *ngIf="lan"></app-footer>

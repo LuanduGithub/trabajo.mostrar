@@ -1,0 +1,102 @@
+<app-header *ngIf="lan" title='{{lan.bitacora.bitacora}}'></app-header>
+<ion-content *ngIf="lan">
+    <div class="services-list animacion-entrada">
+        <div class="detail-list" style="border-radius: 6px;">
+            <div class="detail-list__item">
+                <ion-item lines="none">
+                    <ion-label>{{lan.bitacora.bitacora | uppercase}}</ion-label>
+                    <ion-select placeholder="Tipo" [(ngModel)]="bitacoraTypeSelect" cancelText="{{lan.bitacora.aceptar}}"
+                        okText="{{lan.tripulantedetalles.aceptar}}" (ionChange)="chooseType($event)">
+                        <ion-select-option value="{{bitacoraType.typeId}}" *ngFor="let bitacoraType of bitacorasType">
+                            {{bitacoraType.type}}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
+            </div>
+            <div class="detail-list__item">
+                <div class="detail-list__item__button-badge" *ngFor="let bitacoraType of bitacorasType">
+                    <ion-button (click)="chooseType(bitacoraType.typeId)" style="width: initial;" size="small"
+                        *ngIf="bitacoraType.typeNoRed > 0">
+                        {{bitacoraType.type}}
+                        <ion-badge color="secondary">{{bitacoraType.typeNoRed}}</ion-badge>
+                    </ion-button>
+                </div>
+            </div>
+            <ion-button color="primary" class="" mode="ios" (click)="backbtn()" *ngIf="!bitacoraTypeChoose">
+                <ion-icon name="chevron-back"></ion-icon>
+                {{lan.general.volver}}
+            </ion-button>
+        </div>
+    </div>
+
+    <div class="services-list animacion-entrada" *ngIf="bitacoraTypeChoose">
+        <div class="services-list__header">
+            <div class="services-list__header__title">
+                {{bitacoraTypeChoose[0].nombre}}
+            </div>
+            <div class="services-list__header__amount">
+                <div>
+                    <ion-icon ios="chatbubble-ellipses-outline" md="chatbubble-ellipses-sharp"
+                        style="font-size: .6rem;"></ion-icon>
+                </div>
+            </div>
+        </div>
+        <div class="detail-list ">
+            <div class="detail-list__item message-container" style="border:none">
+                <div *ngFor="let mensaje of bitacoraTypeChoose[0].mensajes; let i = index"
+                    [ngStyle]="{'text-align': mensaje.persona === user ? 'right': 'left' }">
+                    <div
+                        [ngClass]="{'detail-list__item__messageBox__user' : mensaje.persona === user, 'detail-list__item__messageBox__tripulante': mensaje.persona !== user }">
+                        <div class="detail-list__item__messageBox__arrowRight"
+                            *ngIf="mensaje.persona !== user"></div>
+                        <div class="detail-list__item__messageBox__arrowLeft"
+                            *ngIf="mensaje.persona === user"></div>
+                        <span class="detail-list__item__messageBox__name">{{mensaje.persona | titlecase}}
+                            <ion-icon name="information-circle" class="detail-list__item__messageBox__name__info"
+                                (click)="showInfo(i)" *ngIf="i !== infoIndex"></ion-icon>
+                        </span><br>
+                        <span class="detail-list__item__messageBox__message">{{mensaje.mensaje}}</span>
+                        <div class="detail-list__item__messageBox__date">{{mensaje.fecha | date: 'mediumDate'}}
+                            {{mensaje.hora}} hs</div>
+                        <div class="detail-list__item__messageBox__infoBox" *ngIf="i === infoIndex">
+                            <ion-icon name="close-circle" style="position: absolute;
+                            top: 0;
+                            right: 0;
+                            font-size: 1rem;
+                            color: var(--ion-color-primary);" (click)="showInfo()"></ion-icon>
+                            Leído por:
+                            <div *ngFor="let receptor of mensaje.receptores">
+                                <div *ngIf="receptor.fecha">
+                                    {{receptor.persona}} <br>
+                                    {{receptor.fecha | date:'mediumDate'}} {{receptor.Hora}} hs
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div #messageBox></div>
+            </div>
+            <div class="detail-list__item " style="border:none">
+                <ion-item lines="none">
+                    <div class="detail-list__item__textArea-container">
+                        <ion-textarea autofocus="true" placeholder="{{lan.bitacora.mensajePlaceholder}}" clearOnEdit="true"
+                            enterkeyhint="enter" maxlength="250" [(ngModel)]="message"></ion-textarea>
+                        <ion-spinner name="crescent" style="margin: 11px auto" color="secondary"
+                            *ngIf="sendMessageLoading"></ion-spinner>
+                        <ion-button (click)="sendMessage()" disabled="{{message?.length <= 0}}" *ngIf="!sendMessageLoading"
+                            style="height: 98%;margin: 0;">
+                            <ion-icon name="send"></ion-icon>
+                        </ion-button>
+                    </div>
+                </ion-item>
+            </div>
+
+            <ion-button color="primary" class="" mode="ios" (click)="backbtn()" *ngIf="bitacoraTypeChoose">
+                <ion-icon name="chevron-back"></ion-icon>
+                {{lan.general.volver}}
+            </ion-button>
+        </div>
+    </div>
+</ion-content>
+<app-footer *ngIf="lan"></app-footer>

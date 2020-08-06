@@ -1,0 +1,24 @@
+<app-header title="{{lan?.sinubicacion.TituloPantalla}}" [showMenuBtn]="true"></app-header>
+<ion-content>
+  <p style="width: 40%; margin: 50px auto 50px;" *ngIf="!lan">
+    <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
+  </p>
+  <div class="no-connected-container" *ngIf="lan">
+    <img src="./../../../assets/noPosition.png" />
+    <div>
+      <p>{{lan?.sinubicacion.Explicacion}}</p>
+      <p>{{lan?.sinubicacion.TituloExplicacion}}</p>
+      <em *ngIf="showTip">{{lan?.sinubicacion.GuiaActivar}}</em>
+    </div>
+    <div>
+      <p style="margin: 0 3px; ">
+        <ion-progress-bar color="secondary" type="indeterminate" *ngIf="coordsBar"></ion-progress-bar>
+      </p>
+      <p class="messagePosDenied" *ngIf="deviceAuth">{{lan?.sinubicacion.DeshabilitadaDispositivo}}</p>
+      <p class="messagePosDenied" *ngIf="deviceUser">{{lan?.sinubicacion.DeshabilitadaUsuario}}</p>
+      <ion-button color="secondary" expand="block" (click)="checkLocation()">{{lan?.sinubicacion.BotonBuscarUbicacion}}
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+<app-footer></app-footer>

@@ -1,0 +1,79 @@
+<app-header *ngIf="lan" title='{{lan.serviciocomida.serviciocomida}}'></app-header>
+
+<ion-content>
+  <div class="services-list animacion-entrada" *ngIf="comida">
+    <div class="services-list__header">
+      <div class="services-list__header__title">
+        {{comida.lugar}}
+      </div>
+      <div class="services-list__header__amount">
+        <div>
+          <ion-icon ios="business-outline" md="business-sharp" style="font-size: .6rem;"></ion-icon>
+        </div>
+      </div>
+    </div>
+    <div class="detail-list">
+      <div class="detail-list__item">
+        <ion-icon name="time"></ion-icon>
+        <label><span>({{lan.serviciocomida.fechaHora}})</span>{{comida.fecha | date: 'mediumDate'}} |
+          {{comida.hora | date: 'mediumTime'}}</label>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="pizza"></ion-icon>
+        <label><span>({{lan.serviciocomida.tipoComida}})</span>{{comida.comida}}</label>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="pizza"></ion-icon>
+        <label><span>({{lan.serviciocomida.comida}})</span>{{comida.tipoComida}}</label>
+      </div>
+      <div class="detail-list__item">
+        <ion-icon name="book"></ion-icon>
+        <label><span>({{lan.serviciocomida.tipoContrato}})</span>{{comida.tipoContrato}}</label>
+      </div>
+
+      <div class="detail-list__item">
+        <ion-icon name="alert"></ion-icon>
+        <label><span>({{lan.serviciocomida.estado}})</span>{{comida.estado}}</label>
+      </div>
+
+      <div class="detail-list__item">
+        <ion-icon name="people"></ion-icon>
+        <label><span>{{lan.serviciotraslado.tripulante}}</span>{{comida.cantidadTripulantes}}</label>
+        <ion-icon class="dropdown" name="caret-down-outline" (click)="sublist = !sublist"
+          [ngClass]="{'rotate-element-180':  sublist,'rotate-element-0': !sublist}">
+        </ion-icon>
+        <div class="detail-list__item__sublist" *ngIf="sublist">
+          <div class="detail-list__item__sublist__item" *ngFor="let tripulantes of comida.tripulantes">
+            <div><span>{{lan.serviciotraslado.nombre}}</span> {{tripulantes.nombre}}</div>
+            <div><span>{{lan.serviciotraslado.dni}}</span> {{tripulantes.documento}}</div>
+            <ion-button color="primary" class="services-list__grid__buttonDetail" mode="ios"
+              (click)="gotoTripulante(tripulantes)">
+              <ion-icon name="information"></ion-icon>
+            </ion-button>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-list__item">
+        <ion-icon name="chatbox"></ion-icon>
+        <label>{{lan.general.sincomentarios || comida.observacion}}</label>
+      </div>
+
+
+      <ion-button color="tertiary" class="" mode="ios" (click)="gotoBitacora()">
+        <ion-icon name="mail-unread" style="font-size: .85rem; margin-right: 5px;color:var(--ion-color-danger-shade)"
+          *ngIf="comida.bitacoraNuevo"></ion-icon>
+        <ion-icon name="mail" style="font-size: .85rem; margin-right: 5px;" *ngIf="!comida.bitacoraNuevo">
+        </ion-icon>
+        {{lan.serviciotraslado.bitacora}}
+      </ion-button>
+      <ion-button color="primary" class="" mode="ios" (click)="backbtn()">
+        <ion-icon name="chevron-back"></ion-icon>
+        {{lan.general.volver}}
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+
+
+<app-footer *ngIf="lan"></app-footer>

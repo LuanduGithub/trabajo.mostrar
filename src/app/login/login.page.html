@@ -1,0 +1,49 @@
+<ion-toolbar color="primary">
+  <ion-buttons slot="end">
+    <ion-button (click)="presentPopover($event)">
+      <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content>
+  <div class="login-img-container">
+    <img src="./../../assets/sealand-logo.svg" />
+  </div>
+  <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmitLogin(loginFormGroup)">
+    <p style="width: 40%; margin: 0 auto 50px;" *ngIf="!lan">
+      <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
+    </p>
+
+    <div class="login-container" *ngIf="lan">
+      <div class="login-input-container">
+        <label>{{lan.login.DNI}}</label>
+        <input type="number" formControlName="usuarioLogin" />
+      </div>
+      <div class="login-input-container">
+        <label>{{lan.login.Contrasena}}</label>
+        <input type="password" formControlName="passwordLogin" />
+      </div>
+      <div class="login-input-container">
+        <ion-label class="login-input-container__label">
+          <p>{{lan.login.Ubicacion}} <ion-icon name="close-circle"
+              [ngStyle]="{'color': datosCity ? 'var(--ion-color-success )' : 'var(--ion-color-danger)'}"
+              *ngIf="!datosCity"></ion-icon>
+          </p>
+          <span *ngIf="datosCity">
+            {{datosCity.administrativeArea}} - {{datosCity.subAdministrativeArea}}, {{datosCity.countryCode}}
+          </span>
+
+        </ion-label>
+      </div>
+
+      <div class="login-button-container">
+        <button class="button-submit" type="submit" color="secondary"
+          [disabled]="loginFormGroup.invalid && (token === null)" expand="block">
+          {{lan?.login.BotonAcceder}}
+        </button>
+      </div>
+    </div>
+  </form>
+</ion-content>
+<app-footer></app-footer>

@@ -1,0 +1,103 @@
+<app-header *ngIf="lan" title='{{lan.menu.ListadoServicios}}'></app-header>
+
+<ion-content>
+  <p style="width: 40%; margin: 0 auto 50px;" *ngIf="!lan">
+    <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
+  </p>
+  <div class="info-alert  animacion-entrada" *ngIf="lan && !services">
+    <div>
+      <ion-icon slot="start" ios="alert-outline" md="alert-sharp"></ion-icon>
+      {{lan.listadoservicios.SinServicios}}
+    </div>
+  </div>
+  <div class="services-list animacion-entrada" *ngFor="let service of services">
+    <div class="services-list__header"
+      [ngStyle]="{'background': service.tipo.id === 1 ? 'var(--ion-color-primary-shade)' : ( service.tipo.id === 2 ? 'var(--ion-color-medium-shade)' : 'var(--ion-color-dark-shade)')}">
+      <div class="services-list__header__title">
+        {{service.fecha | date: 'mediumDate'}} | {{service.hora | date: 'mediumTime'}}
+      </div>
+
+      <div class="services-list__header__envelop" (click)="gotoBitacora(service)" *ngIf="service.bitacoraNuevo">
+        <div [ngStyle]="{'background': service.tipo.id === 1 ? 'var(--ion-color-primary)' : ( service.tipo.id === 2 ? 'var(--ion-color-medium)' : 'var(--ion-color-dark)'),
+        'border-bottom': service.tipo.id === 1 ? '1px solid var(--ion-color-primary-tint)' : ( service.tipo.id === 2 ? '1px solid var(--ion-color-medium-tint)' : '1px solid var(--ion-color-dark-tint)')
+      }">
+          <ion-icon name="mail-unread" style="font-size: .85rem;"></ion-icon>
+        </div>
+      </div>
+      <div class="services-list__header__amount" (click)="gotoTransfer(service)">
+        <div
+          [ngStyle]="{'background': service.tipo.id === 1 ? 'var(--ion-color-primary)' : ( service.tipo.id === 2 ? 'var(--ion-color-medium)' : 'var(--ion-color-dark)'),
+          'border-bottom': service.tipo.id === 1 ? '1px solid var(--ion-color-primary-tint)' : ( service.tipo.id === 2 ? '1px solid var(--ion-color-medium-tint)' : '1px solid var(--ion-color-dark-tint)')
+        }">
+          <ion-icon name="car-sport" style="font-size: .8rem;" *ngIf="service.tipo.id === 1"></ion-icon>
+          <ion-icon name="business" style="font-size: .8rem;" *ngIf="service.tipo.id === 2"></ion-icon>
+          <ion-icon name="pizza" style="font-size: .8rem;" *ngIf="service.tipo.id === 4"></ion-icon>
+          
+        </div>
+      </div>
+    </div>
+    <div class="services-list__grid" *ngIf="service.tipo.id === 1" style="background: var(--ion-color-primary-shade)">
+      <div class="services-list__grid__from">
+        <span>{{service.traslados.origen}}</span>
+        <span>(Punto de Origen)</span>
+      </div>
+
+      <div class="services-list__grid__to">
+        <span>{{service.traslados.destino}}</span>
+        <span>(Lugar de destino)</span>
+      </div>
+
+      <div class="services-list__grid__fromIcon">
+        <ion-icon name="car-sport-sharp"></ion-icon>
+        <ion-icon name="arrow-forward"></ion-icon>
+        <span style="position: relative;
+        top: -2px;">{{service.cantidadTripulantes}}</span>
+      </div>
+      <div class="services-list__grid__toIcon">
+        <ion-icon name="car-sport-sharp"></ion-icon>
+      </div>
+      <ion-button color="primary" class="services-list__grid__buttonDetail" mode="ios" (click)="gotoTransfer(service)">
+        <ion-icon name="information"></ion-icon>
+      </ion-button>
+    </div>
+
+
+    <div class="services-list__grid" *ngIf="service.tipo.id === 2" style="background: var(--ion-color-medium-shade)">
+      <div class="services-list__grid__from">
+        <span>{{service.alojamientos.hotel}}</span>
+        <span>(Lugar de Alojamiento)</span>
+      </div>
+
+      <div class="services-list__grid__fromIcon">
+        <ion-icon name="business"></ion-icon>
+        <ion-icon name="arrow-forward"></ion-icon>
+        <span style="position: relative;
+        top: -2px;">{{service.cantidadTripulantes}}</span>
+      </div>
+      <ion-button color="medium" class="services-list__grid__buttonDetail" mode="ios" (click)="gotoAccomodation(service)">
+        <ion-icon name="information"></ion-icon>
+      </ion-button>
+    </div>
+
+    <div class="services-list__grid" *ngIf="service.tipo.id === 4" style="background: var(--ion-color-dark-shade)">
+      <div class="services-list__grid__from">
+        <span>{{service.comidas.lugar}}</span>
+        <span>(Lugar donde come)</span>
+      </div>
+
+      <div class="services-list__grid__fromIcon">
+        <ion-icon name="pizza"></ion-icon>
+        <ion-icon name="arrow-forward"></ion-icon>
+        <span style="position: relative;
+        top: -2px;">{{service.cantidadTripulantes}}</span>
+      </div>
+      <ion-button color="dark" class="services-list__grid__buttonDetail" mode="ios" (click)="gotoFood(service)">
+        <ion-icon name="information"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+
+
+</ion-content>
+<app-footer *ngIf="lan"></app-footer>

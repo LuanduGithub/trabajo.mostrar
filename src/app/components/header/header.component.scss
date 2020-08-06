@@ -1,0 +1,15 @@
+.custom-subtitle{
+    --min-height: 30px;
+    ion-title{
+        font-size: 1rem;
+        font-family: 'Lobster Two', cursive;
+    }
+}
+.custom-title{
+    --min-height: 40px;
+    ion-title{
+        font-size: .9rem;
+        font-family: 'Lato', sans-serif;
+        text-transform: uppercase;
+    }
+}

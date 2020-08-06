@@ -1,0 +1,23 @@
+ion-content {
+  --background: var(--ion-color-primary);
+}
+ion-list {
+  background: var(--ion-color-primary);
+}
+ion-item.form-item{
+  border: 1px solid var(--ion-color-primary-shade);
+  border-radius: 5px;
+  margin: 3px;
+}
+
+.content-container {
+  width: 90%;
+  margin: 0 auto 1rem;
+}
+.list-verficacion ion-item ion-label ion-icon {
+  position: relative;
+  top: 4px;
+  font-size: 1.3rem;
+  color: var(--ion-color-tertiary);
+  margin-right: 5px;
+}

@@ -1,0 +1,33 @@
+ion-content {
+    --background: var(--ion-color-primary);
+}
+
+.no-connected-container {
+    margin-top: 5rem;
+    text-align: center;
+    div {
+        color: var(--ion-color-primary-contrast);
+        font-size: 0.9rem;
+        width: 60%;
+        margin: 0 auto 2rem;
+    }
+}
+.messagePosDenied {
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--ion-color-danger);
+    display: block;
+    border: 1px dashed var(--ion-color-danger);
+    padding: 10px;
+    border-radius: 4px;
+    margin: 0 3px;
+}
+.messagePosCoors {
+    text-transform: capitalize;
+    color: var(--ion-color-secondary);
+    display: block;
+    border: 1px dashed var(--ion-color-secondary);
+    padding: 10px;
+    border-radius: 4px;
+    margin: 3px 3px;
+}

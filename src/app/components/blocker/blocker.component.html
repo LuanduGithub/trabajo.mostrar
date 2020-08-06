@@ -1,0 +1,15 @@
+<div class="blocker" *ngIf="viewBlocker"></div>
+<div class="blocker-message animacion-entrada" *ngIf="viewBlocker">
+  <div class="blocker-message__messageBox-container">
+    <div class="blocker-message__messageBox-container__header">
+      {{blocker.header}}
+    </div>
+    <div class="blocker-message__messageBox-container__message">
+      {{blocker.message}}
+    </div>
+    <button class="blocker-message__messageBox-container__button" (click)="parentFn()">
+      <ion-icon name="{{blocker.buttonTxtIcon}}"></ion-icon>
+      <!-- {{buttonTxt}} -->
+    </button>
+  </div>
+</div>

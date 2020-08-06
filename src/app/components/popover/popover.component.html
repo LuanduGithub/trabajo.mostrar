@@ -1,0 +1,3 @@
+<ion-list *ngIf="languages" >
+  <ion-item lines="none" color="secondary" button *ngFor="let language of languages" (click)="sendId(language.id)">{{language.idioma}}</ion-item>
+</ion-list>

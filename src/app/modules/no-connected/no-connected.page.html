@@ -1,0 +1,10 @@
+<app-header title="{{lan?.sinconexion.TituloPantalla  || 'No internet'}}"  [showMenuBtn]="false"></app-header>
+<ion-content>
+<div class="no-connected-container">
+  <img src="./../../../assets/noConnectedWifi.png" style="width:120px; margin-bottom: 50px;"/>
+  <div>
+    {{lan?.sinconexion.Texto || 'No internet'}}
+  </div>
+</div>
+</ion-content>
+<app-footer></app-footer>

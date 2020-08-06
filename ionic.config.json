@@ -1,0 +1,8 @@
+{
+  "name": "sealandApp",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

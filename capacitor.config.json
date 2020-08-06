@@ -1,0 +1,8 @@
+{
+  "appId": "com.sealand.empleado",
+  "appName": "Sealand Empleados",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}

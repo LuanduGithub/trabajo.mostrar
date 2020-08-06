@@ -1,0 +1,27 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay" (ionWillOpen)="onMenuOpen($event)">
+      <ion-content color="primary">
+        <ion-list id="inbox-list" color="primary">
+          <!-- <img src="./../assets/sealand-logo.svg"/> -->
+          <ion-list-header>SEALAND</ion-list-header>
+          <ion-note>
+            Ship agents & Suppliers<br>
+            <span style="font-size: .7rem; color: var(--ion-color-tertiary);">Version: {{version}} Release: {{versionDate | date}}</span>
+          </ion-note><br>
+          
+          <ion-menu-toggle auto-hide="false">
+            <ion-item (click)="clear()" lines="none" detail="false">
+              <ion-icon color="secondary" slot="start" ios="log-out-outline" md="log-out-sharp"></ion-icon>
+              <ion-label *ngIf="lan">{{lan.menu.CerrarSesion}}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+      </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+  </ion-split-pane>
+</ion-app>
